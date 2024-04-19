@@ -1,0 +1,26 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  pages-deploy:
+    environment:
+      name: github-pages
+    runs-on: ${{ vars.JOBS_RUNNER }}
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Publish Site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
